@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Spinning Circular Text</title>
+    <style>
+        #circle-text {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            position: relative;
+            margin: 50px auto;
+        }
+        span {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform-origin: 0 100px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="circle-container" style="background-color: black; width: 300px; height: 300px; display: flex; justify-content: center; align-items: center; margin: 50px auto;">
+        <div id="circle-text" style="width: 200px; height: 200px; border-radius: 50%; position: relative;"></div>
+    </div>
+    
+    <script>
+        const text = "Testo circolare rotante • ";
+        const circleText = document.getElementById('circle-text');
+    
+        for (let i = 0; i < text.length; i++) {
+            const span = document.createElement('span');
+            span.textContent = text[i];
+            span.style.position = 'absolute';
+            span.style.top = '0';
+            span.style.left = '50%';
+            span.style.transformOrigin = '0 100px';
+            span.style.fontSize = '20px';
+            span.style.color = 'white';  // Testo bianco
+            span.style.transform = `rotate(${i * 360 / text.length}deg)`;
+            circleText.appendChild(span);
+        }
+    
+        let rotation = 0;
+        function rotateText() {
+            rotation += 1;
+            circleText.style.transform = `rotate(${rotation}deg)`;
+            requestAnimationFrame(rotateText);
+        }
+        rotateText();
+    </script>
+</body>
+</html>
