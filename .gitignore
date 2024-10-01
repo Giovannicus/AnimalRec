@@ -130,6 +130,12 @@ ENV/
 env.bak/
 venv.bak/
 
+#folders
+test/
+train/
+valid/
+cifar-10-batches-py/
+
 # Spyder project settings
 .spyderproject
 .spyproject

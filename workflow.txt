@@ -7,5 +7,6 @@
 # pygwal
 # visualkeras
 # prova applicativo plotly
-# yoooooooo
-#hgdrgnfdil
+#fai classificatore binario
+#freezza la conv
+# fai qualcosa per la data augmentation
