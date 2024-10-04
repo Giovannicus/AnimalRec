@@ -50,7 +50,7 @@ Binary crossentropy loss
 Accuracy and precision metrics
 
 Results are visualized using Plotly for easy interpretation.
-result.py: Functions for plotting results
+plots.py: Functions for plotting results
 
 Saving and Loading
 The trained model is saved as 'vgg16_mod.h5', and the training history is saved as 'training_history.json' for future reference and analysis.
