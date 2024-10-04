@@ -1,7 +1,7 @@
 import plotly.graph_objects as go
 import numpy as np
 
-def plot_result(hist):
+def plot_history(hist):
     epochs = np.arange(1, len(hist["loss"]) + 1)
     metrics = ["loss", "accuracy", "precision"]
 
@@ -65,6 +65,37 @@ def plot_result(hist):
         showline=True,  # Show y-axis line
         linewidth=2,
         linecolor='black'
+    )
+
+    fig.show()
+
+def pieplot(Y_train):
+
+    fig = go.Figure(data=[go.Pie(labels=["Animal", "Not animal"],
+                                values=[np.mean(Y_train), 1 - np.mean(Y_train)],
+                                hoverinfo="label+percent",  # Mostra etichetta, percentuale e valore
+                                textinfo='percent',  # Mostra solo la percentuale sulle fette
+
+                                pull=[0, 0.01],  # Evidenzia la seconda fetta
+                                marker=dict(colors=['#FF0000', '#408040']),  # Colori personalizzati
+                                textfont=dict(size=18)
+                                )])
+
+
+    fig.update_layout(
+        paper_bgcolor = "rgba(0,0,0,1)",
+        plot_bgcolor = "rgba(0,0,0,1)",
+        title={
+            'text': "Target distribution",
+            'font': {'color': 'white'}
+        },
+        font=dict(
+            color='white',
+            size=18
+        ),
+        legend=dict(
+            font=dict(color='white')
+        )
     )
 
     fig.show()

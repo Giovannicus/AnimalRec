@@ -132,6 +132,7 @@ venv.bak/
 
 #models
 vgg16_mod.h5
+training_history.json
 
 #txt
 Track.txt
