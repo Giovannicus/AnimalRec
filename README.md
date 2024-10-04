@@ -50,9 +50,6 @@ Binary crossentropy loss
 Accuracy and precision metrics
 
 Results are visualized using Plotly for easy interpretation.
-
-eda_batch.py: Contains functions for exploratory data analysis
-logo.py: Displays the project logo
 result.py: Functions for plotting results
 
 Saving and Loading
