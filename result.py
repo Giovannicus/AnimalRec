@@ -1,58 +1,70 @@
 import plotly.graph_objects as go
 import numpy as np
 
-def plot_res(n_epochs):
+def plot_result(hist):
+    epochs = np.arange(1, len(hist["loss"]) + 1)
+    metrics = ["loss", "accuracy", "precision"]
 
-    epochs = np.arange(1, n_epochs)
-    loss = np.random.uniform(0.2, 1.0, size=len(epochs))  # Loss simulata
-    accuracy = np.random.uniform(0.5, 1.0, size=len(epochs))  # Accuracy simulata
-    val_loss = np.random.uniform(0.3, 1.1, size=len(epochs))  # Val_loss simulata
-    val_accuracy = np.random.uniform(0.4, 1.0, size=len(epochs))  # Val_accuracy simulata
-
-    # Crea una figura Plotly
     fig = go.Figure()
 
-    # Aggiungi i tracciati per ogni metrica
-    fig.add_trace(go.Scatter(x=epochs, y=loss, mode='lines', name='Loss', visible=True))
-    fig.add_trace(go.Scatter(x=epochs, y=accuracy, mode='lines', name='Accuracy', visible=False))
-    fig.add_trace(go.Scatter(x=epochs, y=val_loss, mode='lines', name='Val Loss', visible=False))
-    fig.add_trace(go.Scatter(x=epochs, y=val_accuracy, mode='lines', name='Val Accuracy', visible=False))
+    for metric in metrics:
+        fig.add_trace(go.Scatter(x=epochs, y=hist[metric], mode='lines',
+                                 name=f'Training {metric}',
+                                 line=dict(color='blue'),
+                                 visible=(metric == "loss")))
+        fig.add_trace(go.Scatter(x=epochs, y=hist[f'val_{metric}'], mode='lines',
+                                 name=f'Validation {metric}',
+                                 line=dict(color='orange'),
+                                 visible=(metric == "loss")))
 
-    # Definisci il menu a tendina per cambiare la metrica visualizzata
+    dropdown_menu = []
+    for i, metric in enumerate(metrics):
+        dropdown_menu.append(dict(
+            args=[{'visible': [False] * len(metrics) * 2},
+                  {'title': f'{metric.capitalize()} over Epochs',
+                   'yaxis': {'title': metric.capitalize()}}],
+            label=metric.capitalize(),
+            method='update'
+        ))
+        dropdown_menu[i]['args'][0]['visible'][i*2] = True  # Training metric
+        dropdown_menu[i]['args'][0]['visible'][i*2+1] = True  # Validation metric
+
     fig.update_layout(
-        updatemenus=[
-            dict(
-                buttons=list([
-                    dict(label="Loss",
-                        method="update",
-                        args=[{"visible": [True, False, False, False]},
-                            {"title": "Training Loss"}]),
-                    dict(label="Accuracy",
-                        method="update",
-                        args=[{"visible": [False, True, False, False]},
-                            {"title": "Training Accuracy"}]),
-                    dict(label="Val Loss",
-                        method="update",
-                        args=[{"visible": [False, False, True, False]},
-                            {"title": "Validation Loss"}]),
-                    dict(label="Val Accuracy",
-                        method="update",
-                        args=[{"visible": [False, False, False, True]},
-                            {"title": "Validation Accuracy"}])
-                ]),
-                direction="down",  # Direzione del menu
-                showactive=True  # Mostra il pulsante selezionato
-            )
-        ]
+        updatemenus=[dict(
+            active=0,
+            buttons=dropdown_menu,
+            direction="down",
+            pad={"r": 10, "t": 10},
+            showactive=True,
+            x=0.1,
+            xanchor="left",
+            y=1.1,  # Moved down slightly
+            yanchor="top"
+        )],
+        title="Model Training Metrics",
+        xaxis_title="Epochs",
+        yaxis_title="Loss",
+        height=600,
+        plot_bgcolor='white',
+        paper_bgcolor='white'
     )
 
-    # Aggiungi titolo e etichette agli assi
-    fig.update_layout(
-        title="Metriche di Addestramento del Modello",
-        xaxis_title="Epoche",
-        yaxis_title="Valore",
-        template="plotly_dark"  # Tema grafico
+    fig.update_xaxes(
+        showgrid=True,
+        gridwidth=1,
+        gridcolor='black',
+        showline=True,  # Show x-axis line
+        linewidth=2,
+        linecolor='black',
+        dtick=1  # Set tick interval to 1
+    )
+    fig.update_yaxes(
+        showgrid=True,
+        gridwidth=1,
+        gridcolor='black',
+        showline=True,  # Show y-axis line
+        linewidth=2,
+        linecolor='black'
     )
 
-    # Mostra il grafico
     fig.show()

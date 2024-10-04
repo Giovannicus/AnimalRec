@@ -130,6 +130,13 @@ ENV/
 env.bak/
 venv.bak/
 
+#models
+vgg16_mod.h5
+
+#txt
+Track.txt
+workflow.txt
+
 #folders
 test/
 train/
