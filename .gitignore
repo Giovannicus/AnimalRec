@@ -144,6 +144,10 @@ train/
 valid/
 cifar-10-batches-py/
 
+#libs
+eda_batch.py
+logo.py
+
 # Spyder project settings
 .spyderproject
 .spyproject
